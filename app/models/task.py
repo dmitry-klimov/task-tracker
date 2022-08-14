@@ -1,6 +1,6 @@
 import enum
 
-from app.app import db
+from app.task_tracker_app import db
 from app.models.choice_type import ChoiceType
 
 

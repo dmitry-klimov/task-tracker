@@ -1,4 +1,4 @@
-from app.app import db
+from app.task_tracker_app import db
 
 
 class Position(db.Model):

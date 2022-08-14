@@ -1,5 +1,5 @@
 import config
-from .app import app
+from .task_tracker_app import app
 
 
 @app.route('/')

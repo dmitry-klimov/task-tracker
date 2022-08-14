@@ -15,6 +15,6 @@ api = Api(app)
 
 docs = FlaskApiSpec(app)
 
-from .views import *
 from .models import *
+from .views import *
 from .apis import *
