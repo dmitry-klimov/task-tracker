@@ -1,6 +1,6 @@
 import enum
 
-from app import db
+from app.app import db
 from app.models.choice_type import ChoiceType
 
 
@@ -46,6 +46,7 @@ class Task(db.Model):
         self.parent_task = parent_task
         self.due_to = due_to
         self.priority = priority
+        self.status = TaskStatuses.NOT_ASSIGNED
 
     def __repr__(self):
         return f'{self.surname} {self.name}'

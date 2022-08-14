@@ -1,4 +1,4 @@
-from app import db
+from app.app import db
 
 
 class Employee(db.Model):
@@ -13,9 +13,10 @@ class Employee(db.Model):
         nullable=False
     )
 
-    def __init__(self, name, surname):
+    def __init__(self, name, surname, position):
         self.name = name
         self.surname = surname
+        self.position = position
 
     def __repr__(self):
-        return f'{self.surname} {self.name}'
+        return f'{self.surname} {self.name} ({self.position})'

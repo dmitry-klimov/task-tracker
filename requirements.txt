@@ -2,3 +2,7 @@ Flask==2.2.2
 flask_sqlalchemy
 flask_migrate
 SQLAlchemy==1.4.40
+flask-restful
+flask-apispec
+apispec~=5.2.2
+alembic~=1.8.1
