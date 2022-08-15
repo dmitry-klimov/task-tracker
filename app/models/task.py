@@ -27,12 +27,12 @@ class Task(TaskTrackerDBObj):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     parent_task = db.Column(
         db.Integer,
-        db.ForeignKey('tasks.id', onupdate='CASCADE', ondelete='CASCADE'),
+        db.ForeignKey('tasks.id', onupdate='CASCADE', ondelete='SET NULL'),
         nullable=True
     )
     employee = db.Column(
         db.Integer,
-        db.ForeignKey('employees.id', onupdate='CASCADE', ondelete='CASCADE'),
+        db.ForeignKey('employees.id', onupdate='CASCADE', ondelete='SET NULL'),
         nullable=True
     )
     status = db.Column(

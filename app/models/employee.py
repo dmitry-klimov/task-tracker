@@ -10,7 +10,7 @@ class Employee(TaskTrackerDBObj):
     surname = db.Column(db.String(50), nullable=False)
     position = db.Column(
         db.Integer,
-        db.ForeignKey('positions.id', onupdate='CASCADE', ondelete='CASCADE'),
+        db.ForeignKey('positions.id', onupdate='CASCADE', ondelete='SET NULL'),
         nullable=False
     )
 
