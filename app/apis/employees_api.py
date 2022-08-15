@@ -6,19 +6,14 @@ from app.models import Task, Employee
 from app.task_tracker_app import db
 
 
-# awesome_response_schema = dict(
-#     message=fields.String(default='')
-# )
-
 API_NAME = 'Employees API'
 API_TAGS = ['Employees']
 
 
 class EmployeesAPI(MethodResource, Resource):
-    # @marshal_with(awesome_response_schema)
     @doc(description=API_NAME, tags=API_TAGS)
     def get(self):
-        employees = Employee.query.all()
+        employees = Employee.query.filter(Employee.deleted_on == None)
         results = [
             {
                 "name": employee.name,

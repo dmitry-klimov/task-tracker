@@ -8,6 +8,15 @@ from app.models.task import TaskStatuses, TaskStatusesChoices
 from app.task_tracker_app import db
 
 
+class TasksAPIGetResponseSchema(Schema):
+    priority = fields.Str(description='Приоритет задачи')
+    description = fields.Str(description='Постановка задачи')
+    parent_task = fields.Str(description='Основная задача')
+    employee = fields.Str(default=TaskStatuses.UNASSIGNED[0], description='Исполнитель')
+    due_to = fields.DateTime(description='Срок исполнения')
+    status = fields.Str(description='Текущий статус задачи')
+
+
 class TasksAPIPostRequestSchema(Schema):
     priority = fields.Str(description='Приоритет', required=True)
     description = fields.Str(description='Задача', required=True)
@@ -16,7 +25,7 @@ class TasksAPIPostRequestSchema(Schema):
     due_to = fields.DateTime(description='Срок исполнения', required=True)
 
 
-class TasksAPIUpdateRequestSchema(Schema):
+class TasksAPIPutRequestSchema(Schema):
     priority = fields.Str(description='Приоритет', required=False)
     description = fields.Str(description='Задача', required=False)
     parent_task = fields.Str(description='Основная задача', required=False)
@@ -29,24 +38,15 @@ class TasksAPIDeleteRequestSchema(Schema):
     id = fields.Int(required=True)
 
 
-class TasksAPIResponseSchema(Schema):
-    priority = fields.Str(description='Приоритет задачи')
-    description = fields.Str(description='Постановка задачи')
-    parent_task = fields.Str(description='Основная задача')
-    employee = fields.Str(default=TaskStatuses.UNASSIGNED[0], description='Исполнитель')
-    due_to = fields.DateTime(description='Срок исполнения')
-    status = fields.Str(description='Текущий статус задачи')
-
-
 API_NAME = 'Tasks API'
 API_TAGS = ['Tasks']
 
 
 class TasksAPI(MethodResource, Resource):
-    @marshal_with(TasksAPIResponseSchema)
+    @marshal_with(TasksAPIGetResponseSchema)
     @doc(description=API_NAME, tags=API_TAGS)
     def get(self):
-        tasks = Task.query.all()
+        tasks = Task.query.filter(Task.deleted_on==None)
         results = [
             {
                 "priority": task.priority,
@@ -78,9 +78,9 @@ class TasksAPI(MethodResource, Resource):
         else:
             return {"error": "The request payload is not in JSON format"}
 
-    @marshal_with(TasksAPIUpdateRequestSchema)
+    @marshal_with(TasksAPIPutRequestSchema)
     @doc(description=API_NAME, tags=API_TAGS)
-    def update(self):
+    def put(self):
         if request.is_json:
             data = request.get_json()
             task = Task.oblects.find(id=data['id'])
