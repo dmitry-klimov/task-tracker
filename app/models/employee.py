@@ -1,7 +1,8 @@
+from app.models.task_tracker_db_obj import TaskTrackerDBObj
 from app.task_tracker_app import db
 
 
-class Employee(db.Model):
+class Employee(TaskTrackerDBObj):
     __tablename__ = 'employees'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)

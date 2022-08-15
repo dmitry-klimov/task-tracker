@@ -1,26 +1,27 @@
 import enum
 
-from app.task_tracker_app import db
 from app.models.choice_type import ChoiceType
+from app.models.task_tracker_db_obj import TaskTrackerDBObj
+from app.task_tracker_app import db
 
 
 class TaskStatuses:
-    NOT_ASSIGNED = "not_assigned",
+    UNASSIGNED = "unassigned",
     ASSIGNED = 'assigned',
     IN_PROGRESS = 'in_progress',
     ON_HOLD = 'on_hold',
-    DONE = 'done'
+    DONE = 'accomplished'
 
 
 class TaskStatusesChoices(enum.Enum):
-    TaskStatuses.NOT_ASSIGNED = "Не назначено"
-    TaskStatuses.ASSIGNED = "Назначено"
-    TaskStatuses.IN_PROGRESS = "В работе"
-    TaskStatuses.ON_HOLD = "Ожидание"
-    TaskStatuses.DONE = "Выполнено"
+    TaskStatuses.UNASSIGNED = "Не назначено",
+    TaskStatuses.ASSIGNED = "Назначено",
+    TaskStatuses.IN_PROGRESS = "В работе",
+    TaskStatuses.ON_HOLD = "Ожидание",
+    TaskStatuses.DONE = "Выполнено",
 
 
-class Task(db.Model):
+class Task(TaskTrackerDBObj):
     __tablename__ = 'tasks'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
@@ -46,7 +47,7 @@ class Task(db.Model):
         self.parent_task = parent_task
         self.due_to = due_to
         self.priority = priority
-        self.status = TaskStatuses.NOT_ASSIGNED
+        self.status = TaskStatuses.UNASSIGNED
 
     def __repr__(self):
         return f'{self.surname} {self.name}'
