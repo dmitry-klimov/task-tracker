@@ -10,10 +10,13 @@ from app.task_tracker_app import db
 #     message=fields.String(default='')
 # )
 
+API_NAME = 'Employees API'
+API_TAGS = ['Employees']
+
 
 class EmployeesAPI(MethodResource, Resource):
     # @marshal_with(awesome_response_schema)
-    @doc(description='Employees API', tags=['Employees'])
+    @doc(description=API_NAME, tags=API_TAGS)
     def get(self):
         employees = Employee.query.all()
         results = [
@@ -27,7 +30,7 @@ class EmployeesAPI(MethodResource, Resource):
 
         return {"count": len(results), "tasks": results}
 
-    @doc(description='Employees API', tags=['Employees'])
+    @doc(description=API_NAME, tags=API_TAGS)
     def post(self):
         if request.is_json:
             data = request.get_json()
@@ -38,6 +41,6 @@ class EmployeesAPI(MethodResource, Resource):
             )
             db.session.add(new_employee)
             db.session.commit()
-            return {"message": f"Employee {new_employee.name} has been created successfully."}
+            return {"message": f"Employee {new_employee.name} {new_employee.surname} has been created successfully."}
         else:
             return {"error": "The request payload is not in JSON format"}

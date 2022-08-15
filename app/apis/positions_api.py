@@ -10,10 +10,13 @@ from app.task_tracker_app import db
 #     message=fields.String(default='')
 # )
 
+API_NAME = 'Positions API'
+API_TAGS = ['Positions']
+
 
 class PositionsAPI(MethodResource, Resource):
     # @marshal_with(awesome_response_schema)
-    @doc(description='Positions API', tags=['Positions'])
+    @doc(description=API_NAME, tags=API_TAGS)
     def get(self):
         positions = Position.query.all()
         results = [
@@ -24,7 +27,7 @@ class PositionsAPI(MethodResource, Resource):
 
         return {"count": len(results), "positions": results}
 
-    @doc(description='Positions API', tags=['Positions'])
+    @doc(description=API_NAME, tags=API_TAGS)
     def post(self):
         if request.is_json:
             data = request.get_json()
