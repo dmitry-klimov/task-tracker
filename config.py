@@ -24,5 +24,3 @@ class Config:
     )
     APISPEC_SWAGGER_URL = "/swagger/"
     APISPEC_SWAGGER_UI_URL = "/swagger-ui/"  # URI to access UI of API Doc
-
-# TODO Almost all, or, at least, the most part of these setting must be easy to change without committing it to the repo
